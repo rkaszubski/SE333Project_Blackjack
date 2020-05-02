@@ -28,7 +28,6 @@ public class Dealer{
             input--;
         }
     }
-
     public void newRound(){
         System.out.println("Place your bets!");
         for(Player player : players){
