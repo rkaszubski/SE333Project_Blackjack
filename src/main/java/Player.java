@@ -40,6 +40,7 @@ public class Player {
     public void setBet(int betting){
         bet = betting;
     }
+
     public int getBet(){ return bet;}
 
 

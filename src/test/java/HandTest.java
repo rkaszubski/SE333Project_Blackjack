@@ -70,9 +70,22 @@ class HandTest {
 
     @Test
     void getDealerCard() {
+        Hand h = new Hand();
+        Card c = new Card(Face.SEVEN, Suit.DIAMONDS);
+        h.add(c);
+        Card c2 = new Card(Face.SIX, Suit.DIAMONDS);
+        h.add(c2);
+        assertEquals(h.getDealerCard(),c);
     }
 
     @Test
     void testToString() {
+        Hand h = new Hand();
+        Card c = new Card(Face.SEVEN, Suit.DIAMONDS);
+        h.add(c);
+        assertEquals(h.toString(), "Hand: SEVEN of DIAMONDS / ");
+        Card c2 = new Card(Face.SIX, Suit.DIAMONDS);
+        h.add(c2);
+        assertEquals(h.toString(), "Hand: SEVEN of DIAMONDS / SIX of DIAMONDS / ");
     }
 }
