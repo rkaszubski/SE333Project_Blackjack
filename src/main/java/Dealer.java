@@ -29,14 +29,11 @@ public class Dealer{
         }
     }
 
+
     public void newRound(){
         System.out.println("Place your bets!");
         for(Player player : players){
-            Scanner scanner = new Scanner(System.in);
-            System.out.println(player.getName() + ", How much would you like to bet? Your balance is " + player.getCash());
-            int input = Integer.valueOf(scanner.nextLine());
-            player.setBet(input);
-            player.adjustCash(-player.getBet());
+            player.setBet();
         }
         System.out.println("All bets are locked in");
         System.out.println("Dealing Cards!");

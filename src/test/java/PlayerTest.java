@@ -1,4 +1,8 @@
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,10 +51,24 @@ class PlayerTest {
     }
 
     @Test
-    void setBet() {
+    @DisplayName("Good bet value")
+    void verifyBet() {
+        assertTrue(p.verifyBet("100"));
+    }
+    @Test
+    @DisplayName("Bad bet value - Non Integer")
+    void verifyBetNonInt() {
+        assertFalse(p.verifyBet("Hello"));
     }
 
     @Test
-    void getBet() {
+    @DisplayName("Bad bet value - boundary test")
+    void verifyBetBad() {
+        assertFalse(p.verifyBet("0"));
+        assertTrue(p.verifyBet("1"));
+        assertFalse(p.verifyBet("-1"));
+        assertFalse(p.verifyBet("-100"));
+        assertFalse(p.verifyBet("1001"));
+        assertTrue(p.verifyBet("1000"));
     }
 }

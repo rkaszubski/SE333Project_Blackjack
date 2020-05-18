@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Player {
     private final String name;
@@ -37,8 +38,43 @@ public class Player {
         cash += val;
     }
 
-    public void setBet(int betting){
-        bet = betting;
+    public Boolean verifyBet(String input){
+        int in;
+        try{
+            in = Integer.valueOf(input);
+            if(in <= 0){
+                System.out.println("Your bet must be more than $0");
+                return false;
+
+            }
+            else if(in > cash){
+                System.out.println("Your bet cannot be more than your available cash");
+                return false;
+
+            }
+            else{
+                return true;
+            }
+        }
+        catch (Exception e){
+            System.out.println("Your bet must be an integer value");
+            return false;
+        }
+    }
+
+    public void setBet(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(name + ", How much would you like to bet? Your balance is " + cash);
+
+        String input = (scanner.nextLine());
+
+        while (!verifyBet(input)){
+            input = (scanner.nextLine());
+        }
+        int in = Integer.valueOf(input);
+
+        bet = in;
+        adjustCash(-bet);
     }
 
     public int getBet(){ return bet;}
