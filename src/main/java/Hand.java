@@ -14,10 +14,17 @@ public class Hand {
         count++;
     }
 
+    public Card get(int i){
+        return cards.get(i);
+    }
+
     public int sum(){
         int cardsum = 0;
         int aces = 0;
         for (Card card : cards) {
+            if(card.getFace() == Face.ACE){
+                aces++;
+            }
             cardsum = cardsum + card.getFace().getVal();
             if (cardsum > 21 && aces > 0) {
                 cardsum = cardsum - 11 + 1;
