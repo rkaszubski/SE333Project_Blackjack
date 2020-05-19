@@ -68,7 +68,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <finalName>RKASZUBS</finalName>
+                    <finalName>SE333-RKASZUBS-Project</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <descriptors>
                         <descriptor>src/assembly/assembly.xml</descriptor>
