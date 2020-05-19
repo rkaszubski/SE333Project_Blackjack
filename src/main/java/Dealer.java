@@ -7,6 +7,7 @@ public class Dealer{
     //private final ArrayList<boolean> stillin;
 
     private  Hand hand;
+    private Deck deck;
 
     public Dealer(){
         this.players = new ArrayList<Player>();
@@ -29,15 +30,8 @@ public class Dealer{
         }
     }
 
-
-    public void newRound(){
-        System.out.println("Place your bets!");
-        for(Player player : players){
-            player.setBet();
-        }
-        System.out.println("All bets are locked in");
-        System.out.println("Dealing Cards!");
-        Deck deck = new Deck();
+    public void dealCards(ArrayList<Player> players){
+        deck = new Deck();
         deck.shuffleDeck();
 
         for(Player player : players){
@@ -53,6 +47,17 @@ public class Dealer{
             System.out.println(player.getHand().sum());
         }
         System.out.println("Dealer's Hand: " + hand.getDealerCard() + " / HIDDEN");
+    }
+
+
+    public void newRound(){
+        System.out.println("Place your bets!");
+        for(Player player : players){
+            player.setBet();
+        }
+        System.out.println("All bets are locked in");
+        System.out.println("Dealing Cards!");
+        dealCards(players);
 
         //Hit or Stand
         for(Player player : players){
