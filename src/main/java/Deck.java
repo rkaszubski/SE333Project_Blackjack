@@ -15,12 +15,17 @@ public class Deck {
         }
     }
 
+    public int getSize(){
+        return size;
+    }
+
 
     public void shuffleDeck(){
         Collections.shuffle(cards);
     }
 
     public Card drawCard(){
+        size--;
         return cards.remove(0);
     }
 }
