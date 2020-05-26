@@ -24,7 +24,7 @@ public class Main {
         //Final Standings
         dealer.endgame();
         System.out.println("Thank you for playing!");
-        System.exit(1);
+
     }
 
 }

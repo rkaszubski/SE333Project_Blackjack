@@ -126,21 +126,8 @@ public class Dealer{
 
         //Reveal winners
         for(Player player : players){
-            int result = winorlose(player.getHand(),hand);
-            if (result == 0){
-                System.out.println(player.getName() + " lost!");
-                System.out.println(player.getName() + "'s new balance is " + player.getCash());
-            }
-            else if(result == 1){
-                System.out.println(player.getName() + " won!");
-                player.adjustCash(player.getBet()*2);
-                System.out.println(player.getName() + "'s new balance is " + player.getCash());
-            }
-            else if(result == 2){
-                System.out.println(player.getName() + " tied!");
-                player.adjustCash(player.getBet());
-                System.out.println(player.getName() + "'s new balance is " + player.getCash());
-            }
+            revealwinners(player, winorlose(player.getHand(),hand));
+
         }
 
         //Clear Hands
@@ -150,6 +137,24 @@ public class Dealer{
         }
         hand = new Hand();
 
+    }
+
+    public int revealwinners(Player player, int result){
+        if (result == 0){
+            System.out.println(player.getName() + " lost!");
+            System.out.println(player.getName() + "'s new balance is " + player.getCash());
+        }
+        else if(result == 1){
+            System.out.println(player.getName() + " won!");
+            player.adjustCash(player.getBet()*2);
+            System.out.println(player.getName() + "'s new balance is " + player.getCash());
+        }
+        else if(result == 2){
+            System.out.println(player.getName() + " tied!");
+            player.adjustCash(player.getBet());
+            System.out.println(player.getName() + "'s new balance is " + player.getCash());
+        }
+        return 0;
     }
 
     public int winorlose(Hand playerhand, Hand dealerhand){
