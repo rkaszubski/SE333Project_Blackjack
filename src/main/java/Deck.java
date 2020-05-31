@@ -4,6 +4,7 @@ import java.util.Collections;
 public class Deck {
     private final ArrayList<Card> cards;
     private int size;
+    private boolean isEmpty;
 
     public Deck(){
         cards = new ArrayList<Card>();
@@ -13,6 +14,7 @@ public class Deck {
                 size = size + 1;
             }
         }
+        isEmpty = false;
     }
 
     public int getSize(){
@@ -26,6 +28,11 @@ public class Deck {
 
     public Card drawCard(){
         size--;
+        if(size == 0) isEmpty = true;
         return cards.remove(0);
+    }
+
+    public boolean getisEmpty(){
+        return isEmpty;
     }
 }

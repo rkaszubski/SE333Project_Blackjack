@@ -19,4 +19,13 @@ public class Card {
     public String toString() {
         return face + " of " + suit;
     }
+
+    public boolean CompareTo(Card other){
+        if(this.face == other.face){
+            if(this.suit == other.suit){
+                return true;
+            }
+        }
+        return false;
+    }
 }

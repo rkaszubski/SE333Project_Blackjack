@@ -38,10 +38,12 @@ public class Hand {
 
     @Override
     public String toString(){
-        String out = "Hand: ";
+        StringBuilder buff = new StringBuilder();
+        buff.append("Hand: ");
         for (Card card : cards){
-            out = out + card.toString() + " / ";
+            buff.append(card.toString()).append(" / ");
         }
+        String out = buff.toString();
         return out;
     }
 }

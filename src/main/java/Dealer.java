@@ -17,7 +17,7 @@ public class Dealer{
     public Boolean verifyPlayerCount(String input){
         int in;
         try{
-            in = Integer.valueOf(input);
+            in = Integer.parseInt(input);
             if(in <= 0){
                 System.out.println("Your input must be greater than 0");
                 return false;
@@ -41,7 +41,7 @@ public class Dealer{
     }
 
     public void startGame(){
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, "UTF-8");
         String name;
         String in;
 
@@ -50,7 +50,7 @@ public class Dealer{
         while (!verifyPlayerCount(in)){
             in = (scanner.nextLine());
         }
-        int input = Integer.valueOf(in);
+        int input = Integer.parseInt(in);
         int playernum = 1;
         while (input > 0){
             System.out.println("What is Player #" + playernum +"'s name?");
@@ -58,6 +58,12 @@ public class Dealer{
             addPlayer(name);
             playernum++;
             input--;
+        }
+    }
+
+    public void checkDeck(){
+        if (deck.getisEmpty()){
+            newDeck();
         }
     }
 
@@ -69,18 +75,35 @@ public class Dealer{
     public void dealCards(ArrayList<Player> players){
 
         for(Player player : players){
+            checkDeck();
             player.getHand().add(deck.drawCard());
         }
+        checkDeck();
         hand.add(deck.drawCard());
         for(Player player : players){
+            checkDeck();
             player.getHand().add(deck.drawCard());
         }
+        checkDeck();
         hand.add(deck.drawCard());
         for(Player player : players){
             System.out.println(player.getName() + "'s " + player.getHand().toString());
             System.out.println(player.getHand().sum());
         }
         System.out.println("Dealer's Hand: " + hand.getDealerCard() + " / HIDDEN");
+    }
+
+    public boolean verifyHitStand(String input){
+        if(input instanceof String){
+            input = input.toLowerCase();
+            if(input.equals("hit") || input.equals("stand")) return true;
+            else{
+                System.out.println("invalid input");
+                return false;
+            }
+        }
+        System.out.println("invalid input");
+        return false;
     }
 
 
@@ -98,11 +121,15 @@ public class Dealer{
         for(Player player : players){
             boolean stand = false;
             while(player.getHand().sum()<22 && !stand){
-                Scanner scanner = new Scanner(System.in);
+                Scanner scanner = new Scanner(System.in, "UTF-8");
                 System.out.println(player.getName() + ", Would you like to hit or stand?");
                 String input = scanner.nextLine();
-
+                while(!verifyHitStand(input)){
+                    input = scanner.nextLine();
+                }
+                input = input.toLowerCase();
                 if(input.equals("hit")){
+                    checkDeck();
                     player.getHand().add(deck.drawCard());
                 }
                 if(input.equals("stand")){
@@ -118,6 +145,7 @@ public class Dealer{
         System.out.println(hand.toString());
         System.out.println(hand.sum());
         while(hand.sum()<17){
+            checkDeck();
             hand.add(deck.drawCard());
             System.out.println("Dealer must hit");
             System.out.println(hand.toString());
@@ -143,16 +171,19 @@ public class Dealer{
         if (result == 0){
             System.out.println(player.getName() + " lost!");
             System.out.println(player.getName() + "'s new balance is " + player.getCash());
+            return 0;
         }
         else if(result == 1){
             System.out.println(player.getName() + " won!");
             player.adjustCash(player.getBet()*2);
             System.out.println(player.getName() + "'s new balance is " + player.getCash());
+            return 1;
         }
         else if(result == 2){
             System.out.println(player.getName() + " tied!");
             player.adjustCash(player.getBet());
             System.out.println(player.getName() + "'s new balance is " + player.getCash());
+            return 2;
         }
         return 0;
     }

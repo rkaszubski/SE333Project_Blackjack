@@ -41,7 +41,7 @@ public class Player {
     public Boolean verifyBet(String input){
         int in;
         try{
-            in = Integer.valueOf(input);
+            in = Integer.parseInt(input);
             if(in <= 0){
                 System.out.println("Your bet must be more than $0");
                 return false;
@@ -63,7 +63,7 @@ public class Player {
     }
 
     public void setBet(){
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, "UTF-8");
         System.out.println(name + ", How much would you like to bet? Your balance is " + cash);
 
         String input = (scanner.nextLine());
@@ -71,7 +71,7 @@ public class Player {
         while (!verifyBet(input)){
             input = (scanner.nextLine());
         }
-        int in = Integer.valueOf(input);
+        int in = Integer.parseInt(input);
 
         bet = in;
         adjustCash(-bet);
