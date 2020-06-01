@@ -131,4 +131,5 @@ class DealerTest {
         d1.revealwinners(player,2);
         assertEquals(1000, player.getCash());
     }
+
 }
