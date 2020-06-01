@@ -3,6 +3,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,72 +27,57 @@ class DealerTest {
     @Test
     @DisplayName("Win - Dealer bust")
     void winorlose_winbust(){
-        Hand dh = new Hand();
-        dh.add(new Card(Face.KING,Suit.DIAMONDS));
-        dh.add(new Card(Face.KING,Suit.CLUBS));
-        dh.add(new Card(Face.KING,Suit.HEARTS));
-        Hand ph = new Hand();
-        ph.add(new Card(Face.QUEEN,Suit.DIAMONDS));
-        ph.add(new Card(Face.QUEEN,Suit.CLUBS));
+
+        Hand dh = mock(Hand.class);
+        when(dh.sum()).thenReturn(22);
+        Hand ph = mock(Hand.class);
+        when(ph.sum()).thenReturn(20);
         assertEquals(1, d1.winorlose(ph,dh));
     }
     @Test
     @DisplayName("Win - Player > Dealer - No Busts")
     void winorlose_winnorm(){
-        Hand dh = new Hand();
-        dh.add(new Card(Face.KING,Suit.DIAMONDS));
-        dh.add(new Card(Face.SEVEN,Suit.CLUBS));
-        Hand ph = new Hand();
-        ph.add(new Card(Face.QUEEN,Suit.DIAMONDS));
-        ph.add(new Card(Face.QUEEN,Suit.CLUBS));
+        Hand dh = mock(Hand.class);
+        when(dh.sum()).thenReturn(18);
+        Hand ph = mock(Hand.class);
+        when(ph.sum()).thenReturn(20);
         assertEquals(1, d1.winorlose(ph,dh));
     }
     @Test
     @DisplayName("Lose - Player Bust")
     void winorlose_losebust(){
-        Hand dh = new Hand();
-        dh.add(new Card(Face.KING,Suit.DIAMONDS));
-        dh.add(new Card(Face.SEVEN,Suit.CLUBS));
-        Hand ph = new Hand();
-        ph.add(new Card(Face.QUEEN,Suit.DIAMONDS));
-        ph.add(new Card(Face.QUEEN,Suit.CLUBS));
-        ph.add(new Card(Face.QUEEN,Suit.HEARTS));
+        Hand dh = mock(Hand.class);
+        when(dh.sum()).thenReturn(17);
+        Hand ph = mock(Hand.class);
+        when(ph.sum()).thenReturn(22);
         assertEquals(0, d1.winorlose(ph,dh));
     }
     @Test
     @DisplayName("Lose - Player and Dealer Bust")
     void winorlose_losebothbust(){
-        Hand dh = new Hand();
-        dh.add(new Card(Face.KING,Suit.DIAMONDS));
-        dh.add(new Card(Face.KING,Suit.CLUBS));
-        dh.add(new Card(Face.KING,Suit.HEARTS));
-        Hand ph = new Hand();
-        ph.add(new Card(Face.QUEEN,Suit.DIAMONDS));
-        ph.add(new Card(Face.QUEEN,Suit.CLUBS));
-        ph.add(new Card(Face.QUEEN,Suit.HEARTS));
+        Hand dh = mock(Hand.class);
+        when(dh.sum()).thenReturn(22);
+        Hand ph = mock(Hand.class);
+        when(ph.sum()).thenReturn(22);
         assertEquals(0, d1.winorlose(ph,dh));
     }
     @Test
     @DisplayName("Lose - Dealer > Player")
     void winorlose_losenorm(){
-        Hand dh = new Hand();
-        dh.add(new Card(Face.KING,Suit.DIAMONDS));
-        dh.add(new Card(Face.KING,Suit.CLUBS));
-        Hand ph = new Hand();
-        ph.add(new Card(Face.QUEEN,Suit.DIAMONDS));
-        ph.add(new Card(Face.SEVEN,Suit.CLUBS));
+        Hand dh = mock(Hand.class);
+        when(dh.sum()).thenReturn(21);
+        Hand ph = mock(Hand.class);
+        when(ph.sum()).thenReturn(20);
         assertEquals(0, d1.winorlose(ph,dh));
     }
 
     @Test
     @DisplayName("Tie")
     void winorlose_tie(){
-        Hand dh = new Hand();
-        dh.add(new Card(Face.KING,Suit.DIAMONDS));
-        dh.add(new Card(Face.KING,Suit.CLUBS));
-        Hand ph = new Hand();
-        ph.add(new Card(Face.QUEEN,Suit.DIAMONDS));
-        ph.add(new Card(Face.QUEEN,Suit.CLUBS));
+        Hand dh = mock(Hand.class);
+        when(dh.sum()).thenReturn(18);
+        Hand ph = mock(Hand.class);
+        when(ph.sum()).thenReturn(18);
         assertEquals(2, d1.winorlose(ph,dh));
     }
 
