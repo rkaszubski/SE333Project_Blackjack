@@ -36,6 +36,8 @@ public class Hand {
         return cards.get(0);
     }
 
+    public int getCount(){return count;}
+
     @Override
     public String toString(){
         StringBuilder buff = new StringBuilder();

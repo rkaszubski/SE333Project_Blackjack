@@ -15,6 +15,10 @@ public class Dealer{
         this.hand = new Hand();
     }
 
+    public ArrayList getPlayers(){
+        return players;
+    }
+
     public Boolean verifyPlayerCount(String input){
         int in;
         try{
@@ -73,7 +77,15 @@ public class Dealer{
         deck.shuffleDeck();
     }
 
-    public void dealCards(ArrayList<Player> players){
+    public Deck getDeck(){
+        return deck;
+    }
+
+    public Hand getDealerHand(){
+        return hand;
+    }
+
+    public void dealCards(){
 
         for(Player player : players){
             checkDeck();
@@ -107,6 +119,41 @@ public class Dealer{
         return false;
     }
 
+    public Hand dealerDraw(Hand h) {
+        System.out.println("Revealing Dealer's Cards");
+        System.out.println(h.toString());
+        System.out.println(h.sum());
+        while (h.sum() < 17) {
+            checkDeck();
+            h.add(deck.drawCard());
+            System.out.println("Dealer must hit");
+            System.out.println(h.toString());
+            System.out.println(h.sum());
+        }
+        return h;
+    }
+    public void hitStand(Player player){
+
+        boolean stand = false;
+        while(player.getHand().sum()<22 && !stand){
+            Scanner scanner = new Scanner(System.in, "UTF-8");
+            System.out.println(player.getName() + ", Would you like to hit or stand?");
+            String input = scanner.nextLine();
+            while(!verifyHitStand(input)){
+                input = scanner.nextLine();
+            }
+            input = input.toLowerCase();
+            if(input.equals("hit")){
+                checkDeck();
+                player.getHand().add(deck.drawCard());
+            }
+            if(input.equals("stand")){
+                stand = true;
+            }
+            System.out.println(player.getName() + "'s " + player.getHand().toString());
+            System.out.println(player.getHand().sum());
+        }
+    }
 
     public void newRound(){
         System.out.println("Place your bets!");
@@ -116,42 +163,15 @@ public class Dealer{
         System.out.println("All bets are locked in");
         System.out.println("Dealing Cards!");
         newDeck();
-        dealCards(players);
+        dealCards();
 
         //Hit or Stand
         for(Player player : players){
-            boolean stand = false;
-            while(player.getHand().sum()<22 && !stand){
-                Scanner scanner = new Scanner(System.in, "UTF-8");
-                System.out.println(player.getName() + ", Would you like to hit or stand?");
-                String input = scanner.nextLine();
-                while(!verifyHitStand(input)){
-                    input = scanner.nextLine();
-                }
-                input = input.toLowerCase();
-                if(input.equals("hit")){
-                    checkDeck();
-                    player.getHand().add(deck.drawCard());
-                }
-                if(input.equals("stand")){
-                    stand = true;
-                }
-                System.out.println(player.getName() + "'s " + player.getHand().toString());
-                System.out.println(player.getHand().sum());
-            }
+            hitStand(player);
         }
         //All players done
         //Dealer's turn
-        System.out.println("Revealing Dealer's Cards");
-        System.out.println(hand.toString());
-        System.out.println(hand.sum());
-        while(hand.sum()<17){
-            checkDeck();
-            hand.add(deck.drawCard());
-            System.out.println("Dealer must hit");
-            System.out.println(hand.toString());
-            System.out.println(hand.sum());
-        }
+        hand = dealerDraw(hand);
 
         //Reveal winners
         for(Player player : players){

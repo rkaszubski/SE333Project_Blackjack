@@ -1,11 +1,14 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -131,5 +134,70 @@ class DealerTest {
         d1.revealwinners(player,2);
         assertEquals(1000, player.getCash());
     }
+
+    @Test
+    @DisplayName("deal cards test")
+    void dealCards(){
+        assertTrue(d1.getPlayers().size() == 0);
+        d1.addPlayer("bob");
+        d1.addPlayer("rob");
+        d1.newDeck();
+        d1.dealCards();
+        ArrayList<Player> players = d1.getPlayers();
+        for(Player player : players){
+            assertEquals(player.getHand().getCount(), 2);
+        }
+    }
+
+    @Test
+    @DisplayName("ensure new deck is created when old deck is empty")
+    void checkDeck(){
+        d1.newDeck();
+        for(int i = 0; i<52; i++){
+            d1.getDeck().drawCard();
+        }
+        assertTrue(d1.getDeck().getisEmpty());
+        d1.checkDeck();
+        assertFalse(d1.getDeck().getisEmpty());
+    }
+    @Test
+    @DisplayName("ensure dealer draws when <17")
+    void dealerDraw(){
+        d1.newDeck();
+        Hand h = new Hand();
+        h.add(new Card(Face.ACE, Suit.CLUBS));
+        h.add(new Card(Face.FIVE, Suit.CLUBS));
+        h = d1.dealerDraw(h);
+        assertTrue(h.getCount()>2);
+    }
+
+    @Test
+    @DisplayName("ensure dealer doesn't draw when >=17")
+    void dealerDrawGood(){
+        d1.newDeck();
+        Hand h = new Hand();
+        h.add(new Card(Face.ACE, Suit.CLUBS));
+        h.add(new Card(Face.SIX, Suit.CLUBS));
+        h = d1.dealerDraw(h);
+        assertTrue(h.getCount()==2);
+    }
+/*
+    @Test
+    @DisplayName("test hit")
+    void testHit(){
+
+        d1.newDeck();
+        Player p1 = new Player("bob", 1000);
+        p1.getHand().add(new Card(Face.ACE, Suit.CLUBS));
+        p1.getHand().add(new Card(Face.KING, Suit.CLUBS));
+        assertTrue(p1.getHand().sum() == 21);
+        ByteArrayInputStream in = new ByteArrayInputStream("hit".getBytes());
+        System.setIn(in);
+        d1.hitStand(p1, true);
+        //assert card was drawn and player busted
+        assertTrue(p1.getHand().sum() > 21);
+        assertTrue(p1.getHand().getCount() > 2);
+
+    } Test doesn't work due to standard input errors */
 
 }
